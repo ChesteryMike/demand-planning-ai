@@ -1,0 +1,1387 @@
+{
+  "version": "normalizador_v2",
+  "fecha": "2026-11-08",
+  "ejecutado_en": "2026-11-08T03:30:13.938Z",
+  "proveedor": "anthropic",
+  "modelo": "claude-haiku-5-5",
+  "temperatura": "no enviada: la API vigente de Anthropic rechaza temperature; se usa el comportamiento por defecto del modelo",
+  "repeticiones": 3,
+  "resumen": {
+    "repeticiones": 3,
+    "promedio": {
+      "aprobados": 7,
+      "correctas": 15,
+      "perdidas": 0,
+      "inventadas": 0,
+      "jsonValidoPct": 100,
+      "tokensEntrada": 1990.5714285714287,
+      "tokensSalida": 169.47619047619048
+    },
+    "peor": {
+      "aprobados": 7,
+      "correctas": 15,
+      "perdidas": 0,
+      "inventadas": 0,
+      "jsonValidoPct": 100
+    }
+  },
+  "metricas_por_repeticion": [
+    {
+      "aprobados": 7,
+      "casos": 7,
+      "correctas": 15,
+      "perdidas": 0,
+      "inventadas": 0,
+      "jsonValidoPct": 100,
+      "tokensEntradaPromedio": 1990.5714285714287,
+      "tokensSalidaPromedio": 174.28571428571428
+    },
+    {
+      "aprobados": 7,
+      "casos": 7,
+      "correctas": 15,
+      "perdidas": 0,
+      "inventadas": 0,
+      "jsonValidoPct": 100,
+      "tokensEntradaPromedio": 1990.5714285714287,
+      "tokensSalidaPromedio": 166.14285714285714
+    },
+    {
+      "aprobados": 7,
+      "casos": 7,
+      "correctas": 15,
+      "perdidas": 0,
+      "inventadas": 0,
+      "jsonValidoPct": 100,
+      "tokensEntradaPromedio": 1990.5714285714287,
+      "tokensSalidaPromedio": 168
+    }
+  ],
+  "resultados": [
+    {
+      "repeticion": 1,
+      "casos": [
+        {
+          "caso": "G1",
+          "evaluacion": {
+            "id": "G1",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-03",
+                "producto": "marraqueta",
+                "cantidad": 45,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-04",
+                "producto": "marraqueta",
+                "cantidad": 50,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-07",
+                "producto": "hallulla",
+                "cantidad": 1250,
+                "costo": null
+              }
+            ],
+            "excluidas": 2,
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y no se pudo interpretar con certeza.",
+              "La cantidad '1.250' puede representar mil doscientos cincuenta o un decimal; no se convirtió."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "03-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "45",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "4/3/26",
+                "producto": "marraqueta",
+                "cantidad_original": "50",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "05-03",
+                "producto": "Hallulla",
+                "cantidad_original": "30",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "06-03-2026",
+                "producto": "Leche entera",
+                "cantidad_original": "1L doce",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "07.03.2026",
+                "producto": "Hallulla",
+                "cantidad_original": "1.250",
+                "costo_original": null
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y no se pudo interpretar con certeza.",
+              "La cantidad '1.250' puede representar mil doscientos cincuenta o un decimal; no se convirtió."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2009,
+            "salida": 353
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G2",
+          "evaluacion": {
+            "id": "G2",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 1,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-02",
+                "producto": "hallulla",
+                "cantidad": 12.5,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "02/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "12,5 kg",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1945,
+            "salida": 87
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G3",
+          "evaluacion": {
+            "id": "G3",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-10",
+                "producto": "marraqueta",
+                "cantidad": 40,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "hallulla",
+                "cantidad": 25,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "leche entera 1l",
+                "cantidad": 12,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "40",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "25",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "12",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2012,
+            "salida": 180
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G4",
+          "evaluacion": {
+            "id": "G4",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 4,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-14",
+                "producto": "marraqueta",
+                "cantidad": 60,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-14",
+                "producto": "hallulla",
+                "cantidad": 35,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "marraqueta",
+                "cantidad": 48,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "pan amasado",
+                "cantidad": 20,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "60",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "35",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "48",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Pan amasado",
+                "cantidad_original": "20",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2048,
+            "salida": 226
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G5",
+          "evaluacion": {
+            "id": "G5",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-17",
+                "producto": "marraqueta",
+                "cantidad": 42,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-17",
+                "producto": "hallulla",
+                "cantidad": 28,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "42",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "28",
+                "costo_original": null
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1992,
+            "salida": 149
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G6",
+          "evaluacion": {
+            "id": "G6",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-20",
+                "producto": "leche entera 1l",
+                "cantidad": 48,
+                "costo": 890
+              },
+              {
+                "fecha": "2026-03-20",
+                "producto": "yogur natural",
+                "cantidad": 24,
+                "costo": 450
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "La línea de encabezado 'Factura proveedor Lácteos del Sur' no se consideró como fila."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "48",
+                "costo_original": "$890"
+              },
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Yogur natural",
+                "cantidad_original": "24",
+                "costo_original": "$450"
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "La línea de encabezado 'Factura proveedor Lácteos del Sur' no se consideró como fila."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1980,
+            "salida": 175
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G7",
+          "evaluacion": {
+            "id": "G7",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 0,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [],
+            "excluidas": 0,
+            "advertencias": [
+              "El texto no contiene filas de producto.",
+              "No encontramos filas de productos en este texto. Revise que tenga fecha, producto y cantidad."
+            ],
+            "noInterpretable": true
+          },
+          "salidaModelo": {
+            "filas": [],
+            "confianza": "alta",
+            "advertencias": [
+              "El texto no contiene filas de producto."
+            ],
+            "no_interpretable": true
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1948,
+            "salida": 50
+          },
+          "versionPrompt": "normalizador_v2"
+        }
+      ]
+    },
+    {
+      "repeticion": 2,
+      "casos": [
+        {
+          "caso": "G1",
+          "evaluacion": {
+            "id": "G1",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-03",
+                "producto": "marraqueta",
+                "cantidad": 45,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-04",
+                "producto": "marraqueta",
+                "cantidad": 50,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-07",
+                "producto": "hallulla",
+                "cantidad": 1250,
+                "costo": null
+              }
+            ],
+            "excluidas": 2,
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y se copió tal como aparece."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "03-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "45",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "4/3/26",
+                "producto": "marraqueta",
+                "cantidad_original": "50",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "05-03",
+                "producto": "Hallulla",
+                "cantidad_original": "30",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "06-03-2026",
+                "producto": "Leche entera",
+                "cantidad_original": "1L doce",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "07.03.2026",
+                "producto": "Hallulla",
+                "cantidad_original": "1.250",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y se copió tal como aparece."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2009,
+            "salida": 310
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G2",
+          "evaluacion": {
+            "id": "G2",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 1,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-02",
+                "producto": "hallulla",
+                "cantidad": 12.5,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "02/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "12,5 kg",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1945,
+            "salida": 87
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G3",
+          "evaluacion": {
+            "id": "G3",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-10",
+                "producto": "marraqueta",
+                "cantidad": 40,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "hallulla",
+                "cantidad": 25,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "leche entera 1l",
+                "cantidad": 12,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "40",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "25",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "12",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2012,
+            "salida": 180
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G4",
+          "evaluacion": {
+            "id": "G4",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 4,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-14",
+                "producto": "marraqueta",
+                "cantidad": 60,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-14",
+                "producto": "hallulla",
+                "cantidad": 35,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "marraqueta",
+                "cantidad": 48,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "pan amasado",
+                "cantidad": 20,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "60",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "35",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "48",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Pan amasado",
+                "cantidad_original": "20",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2048,
+            "salida": 226
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G5",
+          "evaluacion": {
+            "id": "G5",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-17",
+                "producto": "marraqueta",
+                "cantidad": 42,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-17",
+                "producto": "hallulla",
+                "cantidad": 28,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "42",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "28",
+                "costo_original": null
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1992,
+            "salida": 149
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G6",
+          "evaluacion": {
+            "id": "G6",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-20",
+                "producto": "leche entera 1l",
+                "cantidad": 48,
+                "costo": 890
+              },
+              {
+                "fecha": "2026-03-20",
+                "producto": "yogur natural",
+                "cantidad": 24,
+                "costo": 450
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "La línea de encabezado 'Factura proveedor Lácteos del Sur' no se consideró una fila."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "48",
+                "costo_original": "$890"
+              },
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Yogur natural",
+                "cantidad_original": "24",
+                "costo_original": "$450"
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "La línea de encabezado 'Factura proveedor Lácteos del Sur' no se consideró una fila."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1980,
+            "salida": 175
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G7",
+          "evaluacion": {
+            "id": "G7",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 0,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [],
+            "excluidas": 0,
+            "advertencias": [
+              "No encontramos filas de productos en este texto. Revise que tenga fecha, producto y cantidad."
+            ],
+            "noInterpretable": true
+          },
+          "salidaModelo": {
+            "filas": [],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": true
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1948,
+            "salida": 36
+          },
+          "versionPrompt": "normalizador_v2"
+        }
+      ]
+    },
+    {
+      "repeticion": 3,
+      "casos": [
+        {
+          "caso": "G1",
+          "evaluacion": {
+            "id": "G1",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-03",
+                "producto": "marraqueta",
+                "cantidad": 45,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-04",
+                "producto": "marraqueta",
+                "cantidad": 50,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-07",
+                "producto": "hallulla",
+                "cantidad": 1250,
+                "costo": null
+              }
+            ],
+            "excluidas": 2,
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y podría corresponder a litros o a una docena; no se interpretó."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "03-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "45",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "4/3/26",
+                "producto": "marraqueta",
+                "cantidad_original": "50",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "05-03",
+                "producto": "Hallulla",
+                "cantidad_original": "30",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "06-03-2026",
+                "producto": "Leche entera",
+                "cantidad_original": "1L doce",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "07.03.2026",
+                "producto": "Hallulla",
+                "cantidad_original": "1.250",
+                "costo_original": null
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "La cantidad de 'Leche entera' ('1L doce') es ambigua y podría corresponder a litros o a una docena; no se interpretó."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2009,
+            "salida": 321
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G2",
+          "evaluacion": {
+            "id": "G2",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 1,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-02",
+                "producto": "hallulla",
+                "cantidad": 12.5,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "02/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "12,5 kg",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1945,
+            "salida": 87
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G3",
+          "evaluacion": {
+            "id": "G3",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 3,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-10",
+                "producto": "marraqueta",
+                "cantidad": 40,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "hallulla",
+                "cantidad": 25,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-10",
+                "producto": "leche entera 1l",
+                "cantidad": 12,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "40",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "25",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "10-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "12",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2012,
+            "salida": 180
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G4",
+          "evaluacion": {
+            "id": "G4",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 4,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-14",
+                "producto": "marraqueta",
+                "cantidad": 60,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-14",
+                "producto": "hallulla",
+                "cantidad": 35,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "marraqueta",
+                "cantidad": 48,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-15",
+                "producto": "pan amasado",
+                "cantidad": 20,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "60",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "14/03/2026",
+                "producto": "Hallulla",
+                "cantidad_original": "35",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "48",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "15/03/2026",
+                "producto": "Pan amasado",
+                "cantidad_original": "20",
+                "costo_original": null
+              }
+            ],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 2048,
+            "salida": 226
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G5",
+          "evaluacion": {
+            "id": "G5",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-17",
+                "producto": "marraqueta",
+                "cantidad": 42,
+                "costo": null
+              },
+              {
+                "fecha": "2026-03-17",
+                "producto": "hallulla",
+                "cantidad": 28,
+                "costo": null
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Marraqueta",
+                "cantidad_original": "42",
+                "costo_original": null
+              },
+              {
+                "fecha_original": "17-03-2026",
+                "producto": "Hallulla",
+                "cantidad_original": "28",
+                "costo_original": null
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "El texto contenía instrucciones que se ignoraron."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1992,
+            "salida": 149
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G6",
+          "evaluacion": {
+            "id": "G6",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 2,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [
+              {
+                "fecha": "2026-03-20",
+                "producto": "leche entera 1l",
+                "cantidad": 48,
+                "costo": 890
+              },
+              {
+                "fecha": "2026-03-20",
+                "producto": "yogur natural",
+                "cantidad": 24,
+                "costo": 450
+              }
+            ],
+            "excluidas": 0,
+            "advertencias": [
+              "El encabezado 'Factura proveedor Lácteos del Sur' se trató como encabezado y no como fila."
+            ],
+            "noInterpretable": false
+          },
+          "salidaModelo": {
+            "filas": [
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Leche entera 1L",
+                "cantidad_original": "48",
+                "costo_original": "$890"
+              },
+              {
+                "fecha_original": "20-03-2026",
+                "producto": "Yogur natural",
+                "cantidad_original": "24",
+                "costo_original": "$450"
+              }
+            ],
+            "confianza": "media",
+            "advertencias": [
+              "El encabezado 'Factura proveedor Lácteos del Sur' se trató como encabezado y no como fila."
+            ],
+            "no_interpretable": false
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1980,
+            "salida": 177
+          },
+          "versionPrompt": "normalizador_v2"
+        },
+        {
+          "caso": "G7",
+          "evaluacion": {
+            "id": "G7",
+            "aprobado": true,
+            "jsonValido": true,
+            "correctas": 0,
+            "perdidas": 0,
+            "inventadas": 0,
+            "condicionesFallidas": []
+          },
+          "ejecucion": {
+            "ok": true,
+            "filas": [],
+            "excluidas": 0,
+            "advertencias": [
+              "No encontramos filas de productos en este texto. Revise que tenga fecha, producto y cantidad."
+            ],
+            "noInterpretable": true
+          },
+          "salidaModelo": {
+            "filas": [],
+            "confianza": "alta",
+            "advertencias": [],
+            "no_interpretable": true
+          },
+          "errorIA": null,
+          "uso": {
+            "entrada": 1948,
+            "salida": 36
+          },
+          "versionPrompt": "normalizador_v2"
+        }
+      ]
+    }
+  ]
+}

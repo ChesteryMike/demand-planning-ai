@@ -1,0 +1,26 @@
+# Dependencias y builds
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Variables de entorno: nunca al repositorio (salvo el ejemplo)
+.env*
+!.env.example
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Registros locales
+*.log

@@ -1,0 +1,52 @@
+# CI (PROMPT_MAESTRO 8): solo prueba, no despliega.
+# El despliegue lo hace Cloud Run desde `main` (8.3); la protección de la
+# rama exige que este workflow esté en verde antes de entrar a `main`.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    name: Tipos, lint, tests, build y Docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Revisar tipos
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests (sin llamadas reales a la IA)
+        run: npx vitest run
+
+      - name: Build de Next.js (sin variables de entorno)
+        run: npm run build
+
+      - name: Build de la imagen Docker (sin publicarla)
+        run: docker build -t demand-planning-ai .
+
+  secretos:
+    name: Escaneo de secretos (gitleaks, todo el historial)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: gitleaks
+        run: docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:v8.30.1 git /repo --redact --verbose --exit-code 1

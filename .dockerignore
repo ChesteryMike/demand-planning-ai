@@ -1,0 +1,14 @@
+# Nunca dentro de la imagen
+.env*
+.git
+node_modules
+.next
+
+# No hacen falta para construir ni ejecutar
+test-results
+playwright-report
+supabase/.temp
+supabase/.branches
+*.log
+docs/evidencias
+golden_set/resultados
