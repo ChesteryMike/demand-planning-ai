@@ -15,7 +15,7 @@ describe('Explicación del pronóstico (6.11)', () => {
     const lb = calcularLineaBase(ventas, HOY);
     expect(Math.round(totales(lb.pronostico).esperado)).toBe(200);
     const frases = explicarPronostico(lb, lb.pronostico, 'un');
-    expect(frases[0]).toBe('En los próximos 14 días esperamos que venda cerca de 200 un.');
+    expect(frases[0]).toBe('En los próximos 14 días esperamos que venda cerca de 200 unidades.');
     expect(frases).toContain('Los sábados suele vender más: cerca de un 110 % sobre un día normal.');
     expect(frases).toContain('Los lunes suele vender menos: cerca de un 30 % bajo un día normal.');
     expect(frases.join(' ')).not.toMatch(JERGA);

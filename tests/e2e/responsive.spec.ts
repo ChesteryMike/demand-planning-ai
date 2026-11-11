@@ -62,7 +62,7 @@ for (const ancho of ANCHOS) {
         await page.waitForLoadState('networkidle');
         const exceso = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
         expect(exceso, `desplazamiento horizontal en ${ruta} › Visualización`).toBeLessThanOrEqual(0);
-        if (CAPTURAS) await page.screenshot({ path: `docs/evidencias/responsive/${ruta.slice(1)}-visualizacion-${ancho}.png`, fullPage: true });
+        if (CAPTURAS) await page.screenshot({ path: `docs/evidencias/responsive/${ruta.slice(1)}-visualizacion-${ancho.nombre}.png`, fullPage: true });
       });
     }
 

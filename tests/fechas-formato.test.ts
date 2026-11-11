@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { diaSemana, diasEntre, hoyEnChile, rangoFechas, sumarDias } from '@/lib/fechas';
-import { formatoCantidad, formatoFecha, formatoNumero, formatoPesos, textoDias } from '@/lib/formato';
+import { formatoCantidad, formatoFecha, formatoNumero, formatoPesos, nombreUnidad, textoDias, textoUnidades } from '@/lib/formato';
 
 describe('fechas (5.3)', () => {
   it('hoyEnChile: a las 02:00 UTC del 31-03 en Chile todavía es 30-03 (verano, UTC−3)', () => {
@@ -51,6 +51,17 @@ describe('formato (6.11)', () => {
     expect(formatoCantidad(1250)).toBe('1.250');
     expect(formatoCantidad(12.125)).toBe('12,125');
     expect(formatoCantidad(1234567.5)).toBe('1.234.567,5');
+  });
+
+  it('unidades escritas para leerse en una frase: "un" → "unidades", singular y plural', () => {
+    expect(nombreUnidad('un')).toBe('unidades');
+    expect(nombreUnidad('UN', false)).toBe('unidad');
+    expect(nombreUnidad('lt')).toBe('litros');
+    expect(nombreUnidad('kg')).toBe('kg');
+    expect(nombreUnidad('docena')).toBe('docena'); // desconocida: se deja igual
+    expect(textoUnidades(76, 'un')).toBe('76 unidades');
+    expect(textoUnidades(1, 'un')).toBe('1 unidad');
+    expect(textoUnidades(12.5, 'kg')).toBe('12,5 kg');
   });
 
   it('fechas DD-MM-AAAA y días en singular o plural', () => {

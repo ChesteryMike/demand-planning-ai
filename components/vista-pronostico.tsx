@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, type ChartConfig } from '@/components/ui/chart';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { enviarJson } from '@/lib/cliente-api';
-import { formatoCantidad, formatoFecha } from '@/lib/formato';
+import { formatoCantidad, formatoFecha, textoUnidades } from '@/lib/formato';
 import type { ResultadoPronostico } from '@/lib/pronostico/agente';
 import { explicarPronostico } from '@/lib/pronostico/explicacion';
 import type { EscenarioDia, LineaBase } from '@/lib/pronostico/linea-base';
@@ -56,12 +56,12 @@ function Tooltip({ active, payload, unidad }: { active?: boolean; payload?: { pa
       <p className="font-medium">{formatoFecha(punto.fecha)}</p>
       {punto.real !== undefined && (
         <p>
-          Ventas reales: {formatoCantidad(redondo(punto.real))} {unidad}
+          Ventas reales: {textoUnidades(redondo(punto.real), unidad)}
         </p>
       )}
       {punto.esperado !== undefined && (
         <p>
-          Pronóstico: {formatoCantidad(redondo(punto.esperado))} {unidad}
+          Pronóstico: {textoUnidades(redondo(punto.esperado), unidad)}
         </p>
       )}
       {punto.rango && (

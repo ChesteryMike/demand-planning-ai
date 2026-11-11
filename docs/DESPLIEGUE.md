@@ -1,5 +1,7 @@
 # Despliegue en la nube (Fase 8): guía paso a paso, al menor costo
 
+> **¿No tienen una cuenta de Google Cloud con facturación?** Los pasos 4 a 6 de esta guía (Google Cloud) se reemplazan por [DESPLIEGUE-RENDER.md](DESPLIEGUE-RENDER.md), que no requiere tarjeta. Los pasos 1 a 3 y el 7 son iguales.
+
 Esta guía es para el integrante del Grupo 9 que configure las consolas. Se sigue en orden y, en cada paso, dice **qué hacer**, **el valor exacto de cada campo** y **la opción más barata** que respeta el PROMPT_MAESTRO (8.2 y 8.3).
 
 > **Regla de oro:** ninguna clave se pega en el chat, en un commit ni en una captura. Las claves van solo en Secret Manager, en Supabase y en tu `.env` local.

@@ -2,7 +2,7 @@
  * Explicación del pronóstico en lenguaje de comerciante (6.11). Función pura.
  * Sin jerga estadística: nada de "σ", "desviación" ni "regresión".
  */
-import { formatoCantidad } from '../formato';
+import { formatoCantidad, textoUnidades } from '../formato';
 import type { EscenarioDia, LineaBase } from './linea-base';
 
 const DIAS = ['domingos', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábados'];
@@ -27,7 +27,7 @@ export function explicarPronostico(lineaBase: LineaBase, pronostico: EscenarioDi
   const frases: string[] = [];
   const t = totales(pronostico);
   const rango = Math.round(t.bajo) === Math.round(t.alto) ? '' : ` (entre ${entero(t.bajo)} y ${entero(t.alto)})`;
-  frases.push(`En los próximos 14 días esperamos que venda cerca de ${entero(t.esperado)} ${unidad}${rango}.`);
+  frases.push(`En los próximos 14 días esperamos que venda cerca de ${textoUnidades(Math.round(t.esperado), unidad)}${rango}.`);
 
   if (!lineaBase.historialCorto) {
     const maximo = Math.max(...lineaBase.factores);
