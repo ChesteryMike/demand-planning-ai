@@ -7,8 +7,9 @@
  *   · rutas de IA (api/agentes/*) .... 20 cada 10 minutos
  *   · api/demo/restaurar .............  3 cada hora
  *   · api/cuenta/registro ............  5 cada hora
- * La IP sale del primer valor de x-forwarded-for (o x-real-ip) y se guarda
- * solo como HMAC-SHA-256 con SAL_IP: nunca la IP en claro.
+ * La IP sale del origen configurado en IP_CLIENTE_ORIGEN (por defecto, el primer
+ * valor de x-forwarded-for o x-real-ip) y se guarda solo como HMAC-SHA-256 con
+ * SAL_IP: nunca la IP en claro. Detrás de Render hay que configurarlo (ver abajo).
  * El conteo es por ruta y por ventana fija de tiempo.
  */
 import { createHmac } from 'node:crypto';
@@ -35,11 +36,63 @@ export function grupoDeRuta(ruta: string): GrupoRuta {
   return 'escritura';
 }
 
-/** IP del cliente: primer valor de x-forwarded-for; si no, x-real-ip. */
-export function ipDelCliente(cabeceras: Headers): string {
-  const reenviada = cabeceras.get('x-forwarded-for')?.split(',')[0]?.trim();
-  if (reenviada) return reenviada;
-  return cabeceras.get('x-real-ip')?.trim() || 'desconocida';
+export const IP_DESCONOCIDA = 'desconocida';
+/** IPv4 o IPv6 (no valida rangos: solo descarta basura en la cabecera). */
+const PATRON_IP = /^[0-9a-f:.]{3,45}$/i;
+
+/**
+ * De dónde sale la IP del cliente. Se configura con IP_CLIENTE_ORIGEN:
+ *   (vacío) | xff-primero      primer valor de x-forwarded-for (local y Cloud Run, 8.3).
+ *                              OJO: el cliente puede falsificarlo si el proxy no lo limpia.
+ *   cabecera:<nombre>          una cabecera que fija la plataforma y el cliente no puede
+ *                              falsificar. En Render: cabecera:cf-connecting-ip (Cloudflare
+ *                              rechaza con 403 la petición que la trae falsificada).
+ *   xff-desde-final:<n>        n-ésimo valor de x-forwarded-for contando desde el final
+ *                              (1 = el último). En Render, 3 = la IP real del cliente.
+ * Un valor de configuración inválido NO vuelve al modo falsificable: la IP queda "desconocida".
+ */
+export type OrigenIp =
+  | { tipo: 'xff-primero' }
+  | { tipo: 'cabecera'; nombre: string }
+  | { tipo: 'xff-desde-final'; n: number }
+  | { tipo: 'invalido' };
+
+export function leerOrigenIp(valor: string | undefined): OrigenIp {
+  const v = valor?.trim().toLowerCase();
+  if (!v || v === 'xff-primero') return { tipo: 'xff-primero' };
+  if (v.startsWith('cabecera:')) {
+    const nombre = v.slice('cabecera:'.length).trim();
+    if (/^[a-z0-9-]+$/.test(nombre)) return { tipo: 'cabecera', nombre };
+  }
+  if (v.startsWith('xff-desde-final:')) {
+    const n = Number(v.slice('xff-desde-final:'.length));
+    if (Number.isInteger(n) && n >= 1 && n <= 10) return { tipo: 'xff-desde-final', n };
+  }
+  return { tipo: 'invalido' };
+}
+
+function ipValida(texto: string | undefined | null): string {
+  const ip = texto?.trim();
+  return ip && PATRON_IP.test(ip) ? ip : IP_DESCONOCIDA;
+}
+
+/** IP del cliente según el origen configurado (por defecto, primer valor de x-forwarded-for; si no, x-real-ip). */
+export function ipDelCliente(cabeceras: Headers, origen: OrigenIp = leerOrigenIp(process.env.IP_CLIENTE_ORIGEN)): string {
+  switch (origen.tipo) {
+    case 'cabecera':
+      return ipValida(cabeceras.get(origen.nombre));
+    case 'xff-desde-final': {
+      const valores = (cabeceras.get('x-forwarded-for') ?? '').split(',').map((v) => v.trim()).filter(Boolean);
+      return ipValida(valores[valores.length - origen.n]);
+    }
+    case 'invalido':
+      return IP_DESCONOCIDA;
+    case 'xff-primero': {
+      const reenviada = cabeceras.get('x-forwarded-for')?.split(',')[0]?.trim();
+      if (reenviada) return reenviada;
+      return cabeceras.get('x-real-ip')?.trim() || IP_DESCONOCIDA;
+    }
+  }
 }
 
 export function hashIp(ip: string, sal: string): string {
@@ -74,11 +127,12 @@ export type ResultadoLimiteIp = { ok: true } | { ok: false; status: 429 | 503; m
 export async function verificarLimiteIp(
   request: Request,
   ruta: string,
-  deps: { almacen: AlmacenLimiteIp; sal: string | undefined; ahora?: Date },
+  deps: { almacen: AlmacenLimiteIp; sal: string | undefined; ahora?: Date; origenIp?: string },
 ): Promise<ResultadoLimiteIp> {
   if (!deps.sal) return { ok: false, status: 503, mensaje: MENSAJE_SERVICIO_NO_DISPONIBLE };
   const { maximo, ventanaMs } = LIMITES[grupoDeRuta(ruta)];
-  const ipHash = hashIp(ipDelCliente(request.headers), deps.sal);
+  const origen = leerOrigenIp(deps.origenIp ?? process.env.IP_CLIENTE_ORIGEN);
+  const ipHash = hashIp(ipDelCliente(request.headers, origen), deps.sal);
   try {
     const llamadas = await deps.almacen.incrementar(ipHash, ruta, inicioVentana(deps.ahora ?? new Date(), ventanaMs));
     return llamadas > maximo ? { ok: false, status: 429, mensaje: MENSAJE_LIMITE_IP } : { ok: true };

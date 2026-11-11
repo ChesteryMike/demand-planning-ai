@@ -58,6 +58,7 @@ Dentro del servicio, en el menú de la izquierda (grupo **Manage**), abrir **Env
 | `TOPE_DIARIO_IA` | `200` |
 | `TOPE_DIARIO_IA_GLOBAL` | `500` |
 | `SAL_IP` | cadena aleatoria larga, distinta de la del `.env` local **(secreto)** |
+| `IP_CLIENTE_ORIGEN` | `cabecera:cf-connecting-ip` **(obligatoria en Render, ver más abajo)** |
 
 Al guardar, elegir **Save and deploy**: cambiar una variable no afecta lo que ya está ejecutándose, hace falta un despliegue nuevo. Render no tiene un administrador de secretos aparte: las tres claves viven aquí. Los valores se muestran como puntos y el ícono del ojo los revela: **no tomen capturas con los valores a la vista**.
 
@@ -76,7 +77,19 @@ Ninguna debe mostrar valores de claves:
 - `render-variables.png`: la pestaña *Environment* con los **nombres** de las variables y los valores de las tres claves ocultos o tapados.
 - No hay presupuesto de GCP que capturar: el plan es gratuito.
 
-## Pendientes que verifico yo en la Fase 8
+## Por qué `IP_CLIENTE_ORIGEN` es obligatoria en Render
 
-- ⚠️ **IP del cliente:** la documentación de Render no dice qué encabezado trae la IP real ni si el primer valor de `x-forwarded-for` se puede falsificar. La prueba (f), la llamada 61 desde una misma IP, lo demostrará. Si se pudiera falsificar, ajustaría `lib/limite-ip.ts` en un pull request. Los topes diarios de IA y el límite de gasto de Anthropic siguen protegiendo el gasto.
+El límite por IP (6.10) necesita saber la IP real del visitante. La documentación de Render no dice cómo llega, así que se midió en la URL pública el 11-11-2026. Delante de Render hay Cloudflare, y la cadena `x-forwarded-for` queda así:
+
+| Petición | `x-forwarded-for` que recibe la app |
+|---|---|
+| Normal | `<cliente>, <Cloudflare>, <interna de Render>` |
+| Con una cabecera `X-Forwarded-For` falsa | `<falsa>,<cliente>, <Cloudflare>, <interna de Render>` |
+
+El cliente puede **anteponer** valores falsos, así que usar el primero (el comportamiento por defecto) permite esquivar el límite con solo cambiar la cabecera en cada llamada. En cambio, `cf-connecting-ip` la fija Cloudflare: una petición que la trae falsificada recibe un 403 antes de llegar a la app, y `true-client-ip` la sobrescribe con la IP real.
+
+Por eso, en Render hay que agregar la variable **`IP_CLIENTE_ORIGEN`** con el valor **`cabecera:cf-connecting-ip`**. Si se olvida, la app sigue funcionando, pero el límite por IP se puede esquivar. Si se escribe mal, la IP queda "desconocida" para todos (un solo contador compartido) y nunca se vuelve al modo falsificable. Como alternativa existe `xff-desde-final:3`. Los topes diarios de IA y el límite de gasto de Anthropic acotan el gasto en cualquier caso.
+
+## Pendientes
+
 - **Cambios en el documento:** habrá que ajustar la sección 8.3 del `PROMPT_MAESTRO.md` y los nombres de las capturas, y conviene **avisar al profesor** de que se usa Render y no Cloud Run.
