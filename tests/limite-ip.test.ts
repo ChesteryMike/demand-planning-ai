@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+  IP_DESCONOCIDA,
   MENSAJE_LIMITE_IP,
   grupoDeRuta,
   hashIp,
   ipDelCliente,
+  leerOrigenIp,
   verificarLimiteIp,
   type AlmacenLimiteIp,
 } from '@/lib/limite-ip';
@@ -97,5 +99,81 @@ describe('limite-ip.ts (6.10)', () => {
     expect((await verificarLimiteIp(peticion('1.1.1.1'), 'api/ventas', { almacen, sal: undefined })).ok).toBe(false);
     const roto: AlmacenLimiteIp = { incrementar: async () => { throw new Error('sin conexión'); } };
     expect(await verificarLimiteIp(peticion('1.1.1.1'), 'api/ventas', { almacen: roto, sal: SAL })).toMatchObject({ ok: false, status: 503 });
+  });
+});
+
+// ---------------------------------------------------------------------
+// Origen de la IP detrás de Render (medido en https://demand-planning-ai.onrender.com el 11-11-2026).
+// Petición normal:   x-forwarded-for = "<cliente>, <Cloudflare>, <interna de Render>"
+// Con cabecera falsa: x-forwarded-for = "<falsa>,<cliente>, <Cloudflare>, <interna de Render>"
+// cf-connecting-ip la fija Cloudflare (una falsificada recibe 403 antes de llegar a la app).
+// ---------------------------------------------------------------------
+describe('origen de la IP del cliente (IP_CLIENTE_ORIGEN)', () => {
+  const normal = new Headers({
+    'x-forwarded-for': '190.8.127.89, 104.23.209.174, 10.26.210.129',
+    'cf-connecting-ip': '190.8.127.89',
+  });
+  const falsificada = new Headers({
+    'x-forwarded-for': '203.0.113.77,190.8.127.89, 172.68.112.212, 10.26.210.129',
+    'cf-connecting-ip': '190.8.127.89',
+  });
+
+  it('por defecto (primer valor) el cliente puede falsificar su IP: así se esquivaba el límite', () => {
+    expect(ipDelCliente(normal, leerOrigenIp(undefined))).toBe('190.8.127.89');
+    expect(ipDelCliente(falsificada, leerOrigenIp(undefined))).toBe('203.0.113.77');
+  });
+
+  it('cabecera:cf-connecting-ip devuelve la IP real aunque se falsifique x-forwarded-for', () => {
+    const origen = leerOrigenIp('cabecera:cf-connecting-ip');
+    expect(ipDelCliente(normal, origen)).toBe('190.8.127.89');
+    expect(ipDelCliente(falsificada, origen)).toBe('190.8.127.89');
+  });
+
+  it('xff-desde-final:3 devuelve la IP real con 3 o con 4 valores en la cadena', () => {
+    const origen = leerOrigenIp('xff-desde-final:3');
+    expect(ipDelCliente(normal, origen)).toBe('190.8.127.89');
+    expect(ipDelCliente(falsificada, origen)).toBe('190.8.127.89');
+  });
+
+  it('si falta la cabecera, o trae basura, la IP es "desconocida" y no se cae a x-forwarded-for', () => {
+    const origen = leerOrigenIp('cabecera:cf-connecting-ip');
+    expect(ipDelCliente(new Headers({ 'x-forwarded-for': '203.0.113.77' }), origen)).toBe(IP_DESCONOCIDA);
+    expect(ipDelCliente(new Headers({ 'cf-connecting-ip': 'no-es-una-ip!' }), origen)).toBe(IP_DESCONOCIDA);
+    expect(ipDelCliente(new Headers({ 'x-forwarded-for': 'a, b' }), leerOrigenIp('xff-desde-final:3'))).toBe(IP_DESCONOCIDA);
+  });
+
+  it('una configuración inválida (p. ej. un error de tipeo) no vuelve al modo falsificable', () => {
+    expect(leerOrigenIp('cabecera:cf connecting')).toEqual({ tipo: 'invalido' });
+    expect(leerOrigenIp('xff-desde-final:0')).toEqual({ tipo: 'invalido' });
+    expect(leerOrigenIp('cualquier-cosa')).toEqual({ tipo: 'invalido' });
+    expect(ipDelCliente(falsificada, leerOrigenIp('cualquier-cosa'))).toBe(IP_DESCONOCIDA);
+  });
+
+  it('ataque del diagnóstico: con una x-forwarded-for distinta en cada llamada, la 61 sigue dando 429 si se usa cf-connecting-ip', async () => {
+    const { almacen } = almacenEnMemoria();
+    const resultados = [];
+    for (let i = 1; i <= 61; i++) {
+      const peticionFalsa = new Request('http://localhost/api/ventas', {
+        method: 'POST',
+        headers: { 'x-forwarded-for': `203.0.113.${i},190.8.127.89, 172.68.112.212, 10.26.210.129`, 'cf-connecting-ip': '190.8.127.89' },
+      });
+      resultados.push(await verificarLimiteIp(peticionFalsa, 'api/ventas', { almacen, sal: SAL, ahora: AHORA, origenIp: 'cabecera:cf-connecting-ip' }));
+    }
+    expect(resultados.filter((r) => r.ok)).toHaveLength(60);
+    expect(resultados[60]).toMatchObject({ ok: false, status: 429 });
+  });
+
+  it('sin la configuración, esa misma secuencia esquiva el límite (61 llamadas, todas pasan)', async () => {
+    const { almacen } = almacenEnMemoria();
+    let pasaron = 0;
+    for (let i = 1; i <= 61; i++) {
+      const peticionFalsa = new Request('http://localhost/api/ventas', {
+        method: 'POST',
+        headers: { 'x-forwarded-for': `203.0.113.${i},190.8.127.89, 172.68.112.212, 10.26.210.129` },
+      });
+      const r = await verificarLimiteIp(peticionFalsa, 'api/ventas', { almacen, sal: SAL, ahora: AHORA, origenIp: '' });
+      if (r.ok) pasaron++;
+    }
+    expect(pasaron).toBe(61);
   });
 });
