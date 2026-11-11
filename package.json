@@ -17,7 +17,8 @@
     "golden-set": "node --env-file=.env --import tsx scripts/golden-set.ts",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
-    "db:reset": "supabase db reset"
+    "db:reset": "supabase db reset",
+    "ficha:pdf": "node --import tsx scripts/exportar-ficha.mts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.6.0",
