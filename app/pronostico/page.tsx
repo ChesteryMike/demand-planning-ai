@@ -8,6 +8,7 @@ import { SelectorProducto } from '@/components/selector-producto';
 import { VistaPronostico } from '@/components/vista-pronostico';
 import { leerDatosNegocio } from '@/lib/datos';
 import { hoyEnChile } from '@/lib/fechas';
+import { nombreUnidad } from '@/lib/formato';
 import { negocioActivo } from '@/lib/negocio-activo';
 import { calcularLineaBase } from '@/lib/pronostico/linea-base';
 
@@ -45,7 +46,7 @@ export default async function Pronostico({ searchParams }: { searchParams: Promi
       <h1 className="text-2xl font-bold">Pronóstico</h1>
       <SelectorProducto productos={datos.productos.map((p) => ({ id: p.id, nombre: p.nombre }))} actual={producto.id} />
       <p className="text-sm text-muted-foreground">
-        Ventas de los últimos 28 días y lo que esperamos para los próximos 14, en {producto.unidad}.
+        Ventas de los últimos 28 días y lo que esperamos para los próximos 14, en {nombreUnidad(producto.unidad)}.
       </p>
       {/* key: al cambiar de producto se descarta el ajuste de IA del producto anterior */}
       <VistaPronostico key={producto.id} productoId={producto.id} unidad={producto.unidad} lineaBase={lineaBase} />

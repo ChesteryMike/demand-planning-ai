@@ -52,6 +52,28 @@ export function formatoFechaHora(instante: string | Date): string {
   return `${v('day')}-${v('month')}-${v('year')} ${v('hour')}:${v('minute')}`;
 }
 
+const UNIDADES: Record<string, [singular: string, plural: string]> = {
+  un: ['unidad', 'unidades'],
+  u: ['unidad', 'unidades'],
+  unid: ['unidad', 'unidades'],
+  kg: ['kg', 'kg'],
+  g: ['g', 'g'],
+  lt: ['litro', 'litros'],
+  l: ['litro', 'litros'],
+  cc: ['cc', 'cc'],
+};
+
+/** Unidad escrita para leerse en una frase: "un" → "unidades", "lt" → "litros". Si no la conoce, la deja igual. */
+export function nombreUnidad(unidad: string, plural = true): string {
+  const par = UNIDADES[unidad.trim().toLowerCase()];
+  return par ? par[plural ? 1 : 0] : unidad;
+}
+
+/** "1 unidad", "76 unidades", "12,5 kg". */
+export function textoUnidades(cantidad: number, unidad: string): string {
+  return `${formatoCantidad(cantidad)} ${nombreUnidad(unidad, cantidad !== 1)}`;
+}
+
 /** "1 día", "2 días". Para enteros; un número con decimales siempre va en plural. */
 export function textoDias(dias: number): string {
   return `${formatoCantidad(dias)} ${dias === 1 ? 'día' : 'días'}`;
