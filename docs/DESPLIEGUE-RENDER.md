@@ -73,8 +73,9 @@ El primer despliegue construye la imagen y tarda unos minutos. La URL pública t
 ## Paso 4 · Capturas para `docs/evidencias/`
 
 Ninguna debe mostrar valores de claves:
-- `render-despliegue.png`: la configuración del servicio con **Free**, la región y **After CI Checks Pass**.
-- `render-variables.png`: la pestaña *Environment* con los **nombres** de las variables y los valores de las tres claves ocultos o tapados.
+- `render-servicio.png`: el servicio con **Free**, **Docker**, la región y el commit en **Live**.
+- `render-autodeploy.png`: *Settings → Build & Deploy*, con **Auto-Deploy** en **After CI Checks Pass**.
+- `render-variables-1.png` y `render-variables-2.png`: la pestaña *Environment* con los **nombres** de las variables y todos los valores ocultos con puntos (la lista es larga y se captura en dos partes). Sin la barra de pestañas del navegador, que puede mostrar datos personales.
 - No hay presupuesto de GCP que capturar: el plan es gratuito.
 
 ## Por qué `IP_CLIENTE_ORIGEN` es obligatoria en Render
